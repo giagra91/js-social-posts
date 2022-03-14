@@ -57,7 +57,7 @@ const posts = [
     {
         "id": 6,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/300?image=171",
+        "media": "https://unsplash.it/600/300?image=160",
         "author": {
             "name": "Luca Rossi",
             "image": "https://unsplash.it/300/300?image=15"
@@ -68,7 +68,7 @@ const posts = [
     {
         "id": 7,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=112",
+        "media": "https://unsplash.it/600/400?image=199",
         "author": {
             "name": "Marta Bianchi",
             "image": "https://unsplash.it/300/300?image=10"
@@ -79,7 +79,7 @@ const posts = [
     {
         "id": 8,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=234",
+        "media": "https://unsplash.it/600/400?image=256",
         "author": {
             "name": "Veronica De Rossi",
             "image": "https://unsplash.it/300/300?image=20"
@@ -90,7 +90,7 @@ const posts = [
     {
         "id": 9,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=24",
+        "media": "https://unsplash.it/600/400?image=290",
         "author": {
             "name": "Giovanni Salvemini",
             "image": null
@@ -101,7 +101,7 @@ const posts = [
     {
         "id": 10,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=534",
+        "media": "https://unsplash.it/600/400?image=467",
         "author": {
             "name": "Alessandro Grande",
             "image": "https://unsplash.it/300/300?image=29"
@@ -115,7 +115,7 @@ const posts = [
         "media": "https://unsplash.it/600/300?image=171",
         "author": {
             "name": "Marco Rossi",
-            "image": "https://unsplash.it/300/300?image=15"
+            "image": "https://unsplash.it/300/300?image=415"
         },
         "likes": 89,
         "created": "2021-01-21"
@@ -123,7 +123,7 @@ const posts = [
     {
         "id": 12,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=112",
+        "media": "https://unsplash.it/600/400?image=611",
         "author": {
             "name": "Maria Romano",
             "image": "https://unsplash.it/300/300?image=10"
@@ -134,7 +134,7 @@ const posts = [
     {
         "id": 13,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=234",
+        "media": "https://unsplash.it/600/400?image=354",
         "author": {
             "name": "Francesco Dimaro",
             "image": "https://unsplash.it/300/300?image=20"
@@ -145,7 +145,7 @@ const posts = [
     {
         "id": 14,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=24",
+        "media": "https://unsplash.it/600/400?image=300",
         "author": {
             "name": "Matteo Rossi",
             "image": null
@@ -156,7 +156,7 @@ const posts = [
     {
         "id": 15,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=534",
+        "media": "https://unsplash.it/600/400?image=410",
         "author": {
             "name": "Alessandro Mattei",
             "image": "https://unsplash.it/300/300?image=29"
@@ -165,7 +165,6 @@ const posts = [
         "created": "2021-10-01"
     }
 ];
-
 
 function reverseDate(date){
     return date.split("-").reverse().join(`-`);
@@ -180,7 +179,8 @@ for (let i = 0 ; i < posts.length ; i++){
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">                    
+                        <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">
+                        <div class="profile-pic" id="user-letters${i+1}"></div>                    
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${posts[i].author.name}</div>
@@ -207,6 +207,10 @@ for (let i = 0 ; i < posts.length ; i++){
             </div>            
     </div>
     `
+
+    if (!posts[i].author.image){
+        document.getElementById(`user-letters${i+1}`).innerHTML= firstLettersName(posts[i].author.name, posts[i].author.name);
+    }
 };
 
 const likedId = [];
@@ -225,3 +229,11 @@ for (let i = 0 ; i < posts.length ; i++){
         console.log(likedId)
     })
 }
+
+console.log((posts[0].author.name).split(` `)[0].charAt(0) + (posts[0].author.name).split(` `)[1].charAt(0) );
+
+// Funzione per recuperare le inziali del nome e cognome di due stringhe
+function firstLettersName (firstName, lastName){
+    return (firstName).split(` `)[0].charAt(0) + (lastName).split(` `)[1].charAt(0);
+}
+
