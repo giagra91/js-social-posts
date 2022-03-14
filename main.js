@@ -38,7 +38,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": null
+            "image": ``
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -93,7 +93,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=290",
         "author": {
             "name": "Giovanni Salvemini",
-            "image": null
+            "image": ``
         },
         "likes": 255,
         "created": "2021-09-15"
@@ -148,7 +148,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=300",
         "author": {
             "name": "Matteo Rossi",
-            "image": null
+            "image": ``
         },
         "likes": 126,
         "created": "2021-11-09"
@@ -170,17 +170,28 @@ function reverseDate(date){
     return date.split("-").reverse().join(`-`);
 }
 
+let imagePresent = false;
 const mainContainer = document.getElementById(`container`);
 
 for (let i = 0 ; i < posts.length ; i++){
+
+    if (posts[i].author.image !== ``){
+        imagePresent= true;
+    } else {
+        imagePresent = false;
+    }
+
     posts[i].created = reverseDate(posts[i].created);
     mainContainer.innerHTML +=`
         <div class="post">
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">
-                        <div class="profile-pic" id="user-letters${i+1}"></div>                    
+                    ${imagePresent ? 
+                        `<img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">`
+                        : 
+                        `<div class="profile-pic-letter" id="user-letters-${i+1}"></div>`                    
+                        }
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${posts[i].author.name}</div>
@@ -195,7 +206,7 @@ for (let i = 0 ; i < posts.length ; i++){
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="${posts[i].id}">
+                        <a class="like-button  js-like-button" data-postid="${posts[i].id}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
@@ -208,8 +219,10 @@ for (let i = 0 ; i < posts.length ; i++){
     </div>
     `
 
-    if (!posts[i].author.image){
-        document.getElementById(`user-letters${i+1}`).innerHTML= firstLettersName(posts[i].author.name, posts[i].author.name);
+    if (!imagePresent){
+        let newLogo = document.createElement(`h3`);
+        newLogo.innerHTML=firstLettersName(posts[i].author.name, posts[i].author.name);
+        document.getElementById(`user-letters-${i+1}`).appendChild(newLogo);
     }
 };
 
@@ -229,8 +242,6 @@ for (let i = 0 ; i < posts.length ; i++){
         console.log(likedId)
     })
 }
-
-console.log((posts[0].author.name).split(` `)[0].charAt(0) + (posts[0].author.name).split(` `)[1].charAt(0) );
 
 // Funzione per recuperare le inziali del nome e cognome di due stringhe
 function firstLettersName (firstName, lastName){
