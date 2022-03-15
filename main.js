@@ -232,14 +232,22 @@ const likedId = [];
 for (let i = 0 ; i < posts.length ; i++){
     const likeButtons = document.getElementsByClassName(`js-like-button`);
     likeButtons[i].addEventListener(`click`, function(){
-        // Aggiungo il valore uno ai like appena si clicca e poi modifico l'HTML
+
+        if (likeButtons[i].classList.contains(`like-button--liked`)){
+            likeButtons[i].classList.remove(`like-button--liked`);
+            posts[i].likes--;
+            document.getElementById(`like-counter-${i+1}`).innerHTML=`${posts[i].likes}`;
+            likedId.splice(likedId.indexOf(likeButtons[i+1].getAttribute(`data-postid`)));
+        } else {
+              // Aggiungo il valore uno ai like appena si clicca e poi modifico l'HTML
         posts[i].likes++;
         document.getElementById(`like-counter-${i+1}`).innerHTML=`${posts[i].likes}`;
         // Aggiungo la classe per il click
         this.classList.add(`like-button--liked`);
         // Aggiungo all'array creato in precendenza l'id del post a cui è stato aggiunto il like
         likedId.push(posts[i].id);
-        console.log(likedId)
+        }
+        console.warn(likedId)
     })
 }
 
